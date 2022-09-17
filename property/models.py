@@ -1,11 +1,13 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Flat(models.Model):
+    bool_choices = ((True, 'Да'), (False, 'Нет'))
     owner = models.CharField('ФИО владельца', max_length=200)
     owners_phonenumber = models.CharField('Номер владельца', max_length=20)
-    new_building = models.BooleanField('Новостройка')
+    new_building = models.BooleanField('Новостройка', choices=bool_choices, null=True)
     created_at = models.DateTimeField(
         'Когда создано объявление',
         default=timezone.now,
@@ -50,3 +52,10 @@ class Flat(models.Model):
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
+
+
+class Complaint(models.Model):
+    who_complained = models.ForeignKey(User, verbose_name='Кто жаловался', on_delete='CASCAD')
+    complained_apartment = models.ForeignKey(Flat, verbose_name='Квартира, на которую пожаловались', on_delete='CASCAD')
+    text_complaint = models.TextField(verbose_name='Текст жалобы')
+
