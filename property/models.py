@@ -8,7 +8,7 @@ class Flat(models.Model):
     bool_choices = ((True, 'Да'), (False, 'Нет'))
     owner = models.CharField('ФИО владельца', max_length=200)
     owners_phonenumber = models.CharField('Номер владельца', max_length=20)
-    owner_pure_phone = PhoneNumberField(blank=True, max_length=12)
+    owner_pure_phone = PhoneNumberField('Нормализованный номер владельца', blank=True, max_length=12)
     new_building = models.BooleanField('Новостройка', choices=bool_choices, null=True)
     created_at = models.DateTimeField(
         'Когда создано объявление',
@@ -51,7 +51,7 @@ class Flat(models.Model):
         null=True,
         blank=True,
         db_index=True)
-    like = models.ManyToManyField(User, verbose_name='Лайки')
+    like = models.ManyToManyField(User, verbose_name='Лайки', blank=True)
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
@@ -62,3 +62,9 @@ class Complaint(models.Model):
     complained_apartment = models.ForeignKey(Flat, verbose_name='Квартира, на которую пожаловались', on_delete=models.CASCADE)
     text_complaint = models.TextField(verbose_name='Текст жалобы')
 
+
+class Owner(models.Model):
+    Owner_name=models.CharField('Имя владельца', max_length=200)
+    owner_phonenumber = models.CharField('Номер владельца', max_length=20)
+    owner_pure_phone = PhoneNumberField('Нормализованный номер владельца', blank=True, max_length=12)
+    owner_apartments = models.ManyToManyField(Flat, verbose_name='Квартиры в собственности', related_name='owners')
