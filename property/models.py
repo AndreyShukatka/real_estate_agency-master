@@ -8,8 +8,16 @@ class Flat(models.Model):
     bool_choices = ((True, 'Да'), (False, 'Нет'))
     owner = models.CharField('ФИО владельца', max_length=200)
     owners_phonenumber = models.CharField('Номер владельца', max_length=20)
-    owner_pure_phone = PhoneNumberField('Нормализованный номер владельца', blank=True, max_length=12)
-    new_building = models.BooleanField('Новостройка', choices=bool_choices, null=True)
+    owner_pure_phone = PhoneNumberField(
+        'Нормализованный номер владельца',
+        blank=True,
+        max_length=12
+    )
+    new_building = models.BooleanField(
+        'Новостройка',
+        choices=bool_choices,
+        null=True
+    )
     created_at = models.DateTimeField(
         'Когда создано объявление',
         default=timezone.now,
@@ -58,13 +66,34 @@ class Flat(models.Model):
 
 
 class Complaint(models.Model):
-    who_complained = models.ForeignKey(User, verbose_name='Кто жаловался', on_delete=models.CASCADE)
-    complained_apartment = models.ForeignKey(Flat, verbose_name='Квартира, на которую пожаловались', on_delete=models.CASCADE)
+    who_complained = models.ForeignKey(
+        User,
+        verbose_name='Кто жаловался',
+        on_delete=models.CASCADE
+    )
+    complained_apartment = models.ForeignKey(
+        Flat,
+        verbose_name='Квартира, на которую пожаловались',
+        on_delete=models.CASCADE
+    )
     text_complaint = models.TextField(verbose_name='Текст жалобы')
 
 
 class Owner(models.Model):
-    Owner_name=models.CharField('Имя владельца', max_length=200)
+    Owner_name = models.CharField('Имя владельца', max_length=200)
     owner_phonenumber = models.CharField('Номер владельца', max_length=20)
-    owner_pure_phone = PhoneNumberField('Нормализованный номер владельца', blank=True, max_length=12)
-    owner_apartments = models.ManyToManyField(Flat, verbose_name='Квартиры в собственности', related_name='owners')
+    owner_pure_phone = PhoneNumberField(
+        'Нормализованный номер владельца',
+        blank=True,
+        max_length=12
+    )
+    owner_apartments = models.ManyToManyField(
+        Flat,
+        verbose_name='Квартиры в собственности',
+        related_name='flat_owners',
+        blank=True,
+        db_index=True
+    )
+
+    def __str__(self):
+        return self.Owner_name
