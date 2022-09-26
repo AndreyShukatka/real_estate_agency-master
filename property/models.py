@@ -77,14 +77,14 @@ class Complaint(models.Model):
 
 
 class Owner(models.Model):
-    owner_name = models.CharField('Имя владельца', max_length=200)
-    owner_phonenumber = models.CharField('Номер владельца', max_length=20)
-    owner_pure_phone = PhoneNumberField(
+    name = models.CharField('Имя владельца', max_length=200)
+    phonenumber = models.CharField('Номер владельца', max_length=20)
+    pure_phone = PhoneNumberField(
         'Нормализованный номер владельца',
         blank=True,
         max_length=12
     )
-    owner_apartments = models.ManyToManyField(
+    apartments = models.ManyToManyField(
         Flat,
         verbose_name='Квартиры в собственности',
         related_name='flat_owners',
