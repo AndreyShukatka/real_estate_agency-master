@@ -8,7 +8,6 @@ BOOL_CHOISES = ((True, 'Да'), (False, 'Нет'))
 
 class Flat(models.Model):
     owner = models.CharField('ФИО владельца', max_length=200)
-    owners_phonenumber = models.CharField('Номер владельца', max_length=20)
     owner_pure_phone = PhoneNumberField('Нормализованный номер владельца', blank=True, max_length=12)
     new_building = models.BooleanField('Новостройка', choices=BOOL_CHOISES, null=True)
     created_at = models.DateTimeField(
