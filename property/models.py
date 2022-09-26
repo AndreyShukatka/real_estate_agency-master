@@ -66,12 +66,14 @@ class Complaint(models.Model):
     who_complained = models.ForeignKey(
         User,
         verbose_name='Кто жаловался',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='complains'
     )
     apartment = models.ForeignKey(
         Flat,
         verbose_name='Квартира, на которую пожаловались',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+    related_name = 'complains'
     )
     text = models.TextField(verbose_name='Текст жалобы')
 
@@ -93,4 +95,4 @@ class Owner(models.Model):
     )
 
     def __str__(self):
-        return self.owner_name
+        return self.name
