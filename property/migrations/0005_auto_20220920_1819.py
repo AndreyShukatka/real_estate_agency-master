@@ -4,11 +4,11 @@ from django.db import migrations
 
 
 def transfer_owners(apps, schema_editor):
-    flats = apps.get_model('property', 'Flat')
-    owner = apps.get_model('property', 'Owner')
-    owners = owner.objects.all()
+    Flats = apps.get_model('property', 'Flat')
+    Owner = apps.get_model('property', 'Owner')
+    owners = Owner.objects.all()
     for owner in owners:
-        owners_all_flats = flats.objects.filter(owner=owner.Owner_name)
+        owners_all_flats = Flats.objects.filter(owner=owner.Owner_name)
         for flat in owners_all_flats:
             owner.owner_apartments.add(flat)
             owner.save()
