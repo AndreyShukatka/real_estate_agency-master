@@ -4,10 +4,10 @@ from .models import Flat, Complaint, Owner
 
 
 class OwnerInline(admin.TabularInline):
-    model = Owner.owner_apartments.through
+    model = Owner.apartments.through
     raw_id_fields = ('owner',)
 
-
+@admin.register(Flat)
 class FlatAdmin(admin.ModelAdmin):
     search_fields = ('town', 'address', 'owner', 'id')
     readonly_fields = ['created_at']
@@ -15,7 +15,6 @@ class FlatAdmin(admin.ModelAdmin):
         'id',
         'address',
         'price',
-        'owners_phonenumber',
         'owner_pure_phone',
         'new_building',
         'construction_year',
@@ -23,22 +22,17 @@ class FlatAdmin(admin.ModelAdmin):
     )
     list_editable = ['new_building']
     list_filter = ['new_building', 'rooms_number', 'has_balcony']
-    raw_id_fields = ('like',)
+    raw_id_fields = ('likes',)
     inlines = [OwnerInline, ]
 
-
+@admin.register(Complaint)
 class ComplaintAdmin(admin.ModelAdmin):
     raw_id_fields = (
         'who_complained',
-        'complained_apartment'
+        'apartment'
     )
 
-
+@admin.register(Owner)
 class OwnerAdmin(admin.ModelAdmin):
-    raw_id_fields = ('owner_apartments',)
-    search_fields = ('Owner_name',)
-
-
-admin.site.register(Flat, FlatAdmin)
-admin.site.register(Complaint, ComplaintAdmin)
-admin.site.register(Owner, OwnerAdmin)
+    raw_id_fields = ('apartments',)
+    search_fields = ('name',)
