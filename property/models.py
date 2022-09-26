@@ -77,7 +77,7 @@ class Complaint(models.Model):
 
 
 class Owner(models.Model):
-    Owner_name = models.CharField('Имя владельца', max_length=200)
+    owner_name = models.CharField('Имя владельца', max_length=200)
     owner_phonenumber = models.CharField('Номер владельца', max_length=20)
     owner_pure_phone = PhoneNumberField(
         'Нормализованный номер владельца',
@@ -93,4 +93,4 @@ class Owner(models.Model):
     )
 
     def __str__(self):
-        return self.Owner_name
+        return self.owner_name
