@@ -68,12 +68,12 @@ class Complaint(models.Model):
         verbose_name='Кто жаловался',
         on_delete=models.CASCADE
     )
-    complained_apartment = models.ForeignKey(
+    apartment = models.ForeignKey(
         Flat,
         verbose_name='Квартира, на которую пожаловались',
         on_delete=models.CASCADE
     )
-    text_complaint = models.TextField(verbose_name='Текст жалобы')
+    text = models.TextField(verbose_name='Текст жалобы')
 
 
 class Owner(models.Model):
