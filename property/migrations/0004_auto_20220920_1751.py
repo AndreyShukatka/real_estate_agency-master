@@ -3,10 +3,10 @@
 from django.db import migrations
 
 def transfer_owners(apps, schema_editor):
-    flats = apps.get_model('property', 'Flat')
-    owner = apps.get_model('property', 'Owner')
-    owners =owner.objects.all()
-    flats_all = flats.objects.all()
+    Flats = apps.get_model('property', 'Flat')
+    Owner = apps.get_model('property', 'Owner')
+    owners =Owner.objects.all()
+    flats_all = Flats.objects.all()
     for flat in flats_all:
         owners.get_or_create(
             Owner_name=flat.owner,
