@@ -8,13 +8,13 @@ def transfer_owners(apps, schema_editor):
     Owner = apps.get_model('property', 'Owner')
     owners = Owner.objects.all()
     if owners.exists():
-        for owner in owners.interator():
-            flats = Flat.objects.filter(
-                owner=owner.name,
-                owner_pure_phone=owner.pure_phone
+        for flat in Flat.objects.iterator():
+            Owner.objects.get_or_create(
+                name=flat.owner,
+                defaults={
+                    'pure_phone': flat.owner_pure_phone
+                }
             )
-            if flats:
-                owner.flats.set(flats)
 
 
 class Migration(migrations.Migration):
