@@ -15,7 +15,6 @@ class FlatAdmin(admin.ModelAdmin):
         'id',
         'address',
         'price',
-        'owner_pure_phone',
         'new_building',
         'construction_year',
         'town'
